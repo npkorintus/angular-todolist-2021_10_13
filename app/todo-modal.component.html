@@ -1,0 +1,49 @@
+<!-- <h1 mat-dialog-title>Hi {{ data.name }}</h1> -->
+<h1 mat-dialog-title *ngIf="!editValue">Add a new item</h1>
+<h1 mat-dialog-title *ngIf="editValue">Update</h1>
+<div mat-dialog-content>
+  <!-- <p>Add a new item</p> -->
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      id="item"
+      [(ngModel)]="data.inputValue.content"
+      #name="ngModel"
+      required
+    />
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+      <div *ngIf="name.errors?.required">field is required</div>
+    </div>
+  </mat-form-field>
+  <!-- <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <input
+      matInput
+      id="priority"
+      [(ngModel)]="data.inputValue.priority.viewValue"
+    />
+  </mat-form-field> -->
+  <!-- custom select -->
+  <!-- <app-select></app-select> -->
+  <!-- <h4>Basic native select</h4>
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <select [(ngModel)]="data.inputValue.selectedPriority" matNativeControl required>
+      <option value="0">High</option>
+      <option value="1">Medium</option>
+      <option value="2">Low</option>
+    </select>
+  </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button
+    mat-button
+    [mat-dialog-close]="[data.inputValue.content]"
+    cdkFocusInitial
+    [disabled]="name.errors?.required"
+  >
+    Add
+  </button>
+</div>

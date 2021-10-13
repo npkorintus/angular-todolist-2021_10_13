@@ -4,12 +4,24 @@ import { FormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatCardModule, MatListModule, MatButtonModule, MatInputModule, MatExpansionModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatSlideToggleModule, MatChipsModule
+  MatCardModule,
+  MatListModule,
+  MatButtonModule,
+  MatInputModule,
+  MatExpansionModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatSnackBarModule,
+  MatSlideToggleModule,
+  MatChipsModule,
+  MatDialogModule,
+  MatSelectModule,
 } from '@angular/material';
-import { AngularFireModule, } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppComponent } from './app.component';
-import { TodoComponent } from './todo.component';
+import { TodoComponent, TodoModal } from './todo.component';
+// import { SelectComponent } from './select/select.component';
 
 @NgModule({
   imports: [
@@ -26,17 +38,20 @@ import { TodoComponent } from './todo.component';
     MatSnackBarModule,
     MatSlideToggleModule,
     MatChipsModule,
+    MatDialogModule,
+    MatSelectModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyCysz8O0EuHgF8VNQMaC3aXRWb7uGAwHVI",
-      authDomain: "todolistapp-stackblitz.firebaseapp.com",
-      databaseURL: "https://todolistapp-stackblitz.firebaseio.com",
-      projectId: "todolistapp-stackblitz",
-      storageBucket: "todolistapp-stackblitz.appspot.com",
-      messagingSenderId: "907624983083"
+      apiKey: 'AIzaSyCysz8O0EuHgF8VNQMaC3aXRWb7uGAwHVI',
+      authDomain: 'todolistapp-stackblitz.firebaseapp.com',
+      databaseURL: 'https://todolistapp-stackblitz.firebaseio.com',
+      projectId: 'todolistapp-stackblitz',
+      storageBucket: 'todolistapp-stackblitz.appspot.com',
+      messagingSenderId: '907624983083',
     }),
   ],
-  declarations: [AppComponent, TodoComponent],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, TodoComponent, TodoModal],
+  bootstrap: [AppComponent],
+  entryComponents: [TodoComponent, TodoModal],
 })
-export class AppModule { }
+export class AppModule {}
