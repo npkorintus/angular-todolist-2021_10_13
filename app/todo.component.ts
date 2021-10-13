@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Priority } from './select/select.component';
+// import { Priority } from './select/select.component';
 
 export interface Todo {
   content: string;
@@ -44,7 +44,7 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.todoCollection = this.afs.collection('Todolist');
     this.todoList = this.afs
-      .collection('Todolist', (ref) => ref.orderBy('priority'))
+      .collection('Todolist', (ref) => ref.orderBy('datemodified'))
       .snapshotChanges()
       .map((changes) => {
         return changes.map((a) => {
