@@ -16,7 +16,6 @@ export interface Todo {
   datemodified?: Date;
   isDone?: boolean;
   priority: Priority;
-  // selectedPriority: string;
 }
 @Component({
   selector: 'todo',
@@ -33,11 +32,6 @@ export class TodoComponent implements OnInit {
       value: '',
       viewValue: '',
     },
-    // selectedPriority: '',
-    // priority: {
-    //   value: '',
-    //   viewValue: '',
-    // },
   };
 
   editValue: boolean = false;
@@ -141,7 +135,6 @@ export class TodoComponent implements OnInit {
       this.inputValue.content = result[0];
       this.inputValue.priority.value = result[1];
       this.inputValue.priority.viewValue = result[2];
-      // this.inputValue.priority.value = result[1];
       if (this.editValue) {
         console.log('inputValue: ', result);
         this.saveNewItem();
@@ -164,6 +157,7 @@ export class TodoModal {
     { value: '1', viewValue: 'Medium' },
     { value: '2', viewValue: 'Low' },
   ];
+  editValue: boolean = false;
   constructor(
     public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<TodoModal>,
