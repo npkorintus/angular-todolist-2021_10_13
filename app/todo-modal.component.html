@@ -27,7 +27,7 @@
       #name="ngModel"
       required
     >
-      <mat-option *ngFor="let priority of priorities" [value]="data.inputValue.priority.value">
+      <mat-option *ngFor="let priority of priorities" [value]="priority.value">
         {{ priority.viewValue }}
       </mat-option>
     </mat-select>
