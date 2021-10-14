@@ -2,7 +2,6 @@
 <h1 mat-dialog-title *ngIf="!editValue">Add a new item</h1>
 <h1 mat-dialog-title *ngIf="editValue">Update</h1>
 <div mat-dialog-content>
-  <!-- <p>Add a new item</p> -->
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input
@@ -16,14 +15,7 @@
       <div *ngIf="name.errors?.required">field is required</div>
     </div>
   </mat-form-field>
-  <!-- <mat-form-field>
-    <mat-label>Priority</mat-label>
-    <input
-      matInput
-      id="priority"
-      [(ngModel)]="data.inputValue.priority.viewValue"
-    />
-  </mat-form-field> -->
+
   <!-- custom select -->
   <!-- <app-select></app-select> -->
   <!-- <priority-select></priority-select> -->
@@ -31,13 +23,11 @@
     <mat-select
       placeholder="Priority"
       [(ngModel)]="data.inputValue.priority.value"
+      [(value)]="data.inputValue.priority.viewValue"
       #name="ngModel"
       required
     >
-      <mat-option
-        *ngFor="let priority of priorities"
-        [value]="priority.viewValue"
-      >
+      <mat-option *ngFor="let priority of priorities" [value]="data.inputValue.priority.value">
         {{ priority.viewValue }}
       </mat-option>
     </mat-select>
@@ -45,15 +35,13 @@
       <div *ngIf="name.errors?.required">field is required</div>
     </div>
   </mat-form-field>
-
-  <!-- <h4>Basic native select</h4>
-  <mat-form-field>
-    <mat-label>Priority</mat-label>
-    <select [(ngModel)]="data.inputValue.priority" matNativeControl>
-      <option value="0">High</option>
-      <option value="1">Medium</option>
-      <option value="2">Low</option>
-    </select>
+  <!-- <mat-form-field>
+    <mat-select [(value)]="data.inputValue.priority.value">
+      <mat-option>None</mat-option>
+      <mat-option value="option1">Option 1</mat-option>
+      <mat-option value="option2">Option 2</mat-option>
+      <mat-option value="option3">Option 3</mat-option>
+    </mat-select>
   </mat-form-field> -->
 </div>
 <div mat-dialog-actions>
