@@ -186,7 +186,7 @@ export class TodoModal {
   }
 }
 
-/** @title Select with 2-way value binding */
+// /** @title Select with 2-way value binding */
 // @Component({
 //   selector: 'priority-select',
 //   templateUrl: 'priority-select.html',
