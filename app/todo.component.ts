@@ -15,6 +15,7 @@ export interface Todo {
   id?: string;
   datemodified?: Date;
   isDone?: boolean;
+  priority: Priority;
   // selectedPriority: string;
 }
 @Component({
@@ -28,6 +29,10 @@ export class TodoComponent implements OnInit {
   inputId: string;
   inputValue: Todo = {
     content: '',
+    priority: {
+      value: '',
+      viewValue: '',
+    },
     // selectedPriority: '',
     // priority: {
     //   value: '',
@@ -44,12 +49,13 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.todoCollection = this.afs.collection('Todolist');
     this.todoList = this.afs
-      .collection('Todolist', (ref) => ref.orderBy('datemodified'))
+      .collection('Todolist', (ref) => ref.orderBy('priority.value'))
       .snapshotChanges()
       .map((changes) => {
         return changes.map((a) => {
           const data = a.payload.doc.data() as Todo;
           data.id = a.payload.doc.id;
+          console.log('data: ', data);
           return data;
         });
       });
@@ -57,10 +63,13 @@ export class TodoComponent implements OnInit {
 
   addNewItem() {
     if (this.inputValue.content != '') {
+      console.log('added inputValue: ', this.inputValue);
       this.inputValue.datemodified = new Date();
       this.inputValue.isDone = false;
       this.todoCollection.add(this.inputValue);
       this.inputValue.content = '';
+      this.inputValue.priority.value = '';
+      this.inputValue.priority.viewValue = '';
       this.openSnackBar('Added Successfuly!', 'Dismiss');
     }
   }
@@ -92,6 +101,8 @@ export class TodoComponent implements OnInit {
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
     this.todoDoc.update(this.inputValue);
     this.inputValue.content = '';
+    this.inputValue.priority.value = '';
+    this.inputValue.priority.viewValue = '';
     this.openSnackBar('Item Not Done!', 'Dismiss');
   }
   saveNewItem() {
@@ -102,6 +113,8 @@ export class TodoComponent implements OnInit {
       this.todoDoc.update(this.inputValue);
       this.editValue = false;
       this.inputValue.content = '';
+      this.inputValue.priority.value = '';
+      this.inputValue.priority.viewValue = '';
       this.openSnackBar('Updated Successfuly!', 'Dismiss');
     }
   }
@@ -123,8 +136,12 @@ export class TodoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      console.log('closed result: ', result);
       console.log('The dialog was closed');
-      this.inputValue.content = result;
+      this.inputValue.content = result[0];
+      this.inputValue.priority.value = result[1];
+      this.inputValue.priority.viewValue = result[2];
+      // this.inputValue.priority.value = result[1];
       if (this.editValue) {
         console.log('inputValue: ', result);
         this.saveNewItem();
@@ -142,6 +159,11 @@ export class TodoComponent implements OnInit {
 })
 export class TodoModal {
   // todoCollection: AngularFirestoreCollection<Todo>;
+  priorities: Priority[] = [
+    { value: '0', viewValue: 'High' },
+    { value: '1', viewValue: 'Medium' },
+    { value: '2', viewValue: 'Low' },
+  ];
   constructor(
     public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<TodoModal>,
@@ -153,4 +175,50 @@ export class TodoModal {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
+
+/** @title Select with 2-way value binding */
+// @Component({
+//   selector: 'priority-select',
+//   templateUrl: 'priority-select.html',
+//   // styleUrls: ['priority-select.css'],
+// })
+// export class PrioritySelect {
+//   selectedPriority: {
+//     value: string;
+//     viewValue: string;
+//   };
+// }
+
+export interface Priority {
+  value: string;
+  viewValue: string;
+}
+
+/**
+ * @title Basic select
+ */
+@Component({
+  selector: 'priority-select',
+  templateUrl: 'priority-select.html',
+  // styleUrls: ['select-overview-example.css'],
+})
+export class PrioritySelect {
+  selectedPriority: string;
+
+  priorities: Priority[] = [
+    { value: '0', viewValue: 'High' },
+    { value: '1', viewValue: 'Medium' },
+    { value: '2', viewValue: 'Low' },
+  ];
+}
+
+@Component({
+  selector: 'priority-radio-group',
+  // templateUrl: 'priority-radio-group.html',
+  // styleUrls: ['priority-radio-group.css'],
+})
+export class PriorityRadioGroup {
+  selectedPriority: string;
+  priorities: string[] = ['High', 'Medium', 'Low'];
 }

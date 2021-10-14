@@ -26,10 +26,30 @@
   </mat-form-field> -->
   <!-- custom select -->
   <!-- <app-select></app-select> -->
+  <!-- <priority-select></priority-select> -->
+  <mat-form-field>
+    <mat-select
+      placeholder="Priority"
+      [(ngModel)]="data.inputValue.priority.value"
+      #name="ngModel"
+      required
+    >
+      <mat-option
+        *ngFor="let priority of priorities"
+        [value]="priority.viewValue"
+      >
+        {{ priority.viewValue }}
+      </mat-option>
+    </mat-select>
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+      <div *ngIf="name.errors?.required">field is required</div>
+    </div>
+  </mat-form-field>
+
   <!-- <h4>Basic native select</h4>
   <mat-form-field>
     <mat-label>Priority</mat-label>
-    <select [(ngModel)]="data.inputValue.selectedPriority" matNativeControl required>
+    <select [(ngModel)]="data.inputValue.priority" matNativeControl>
       <option value="0">High</option>
       <option value="1">Medium</option>
       <option value="2">Low</option>
@@ -40,7 +60,11 @@
   <button mat-button (click)="onNoClick()">Cancel</button>
   <button
     mat-button
-    [mat-dialog-close]="[data.inputValue.content]"
+    [mat-dialog-close]="[
+      data.inputValue.content,
+      data.inputValue.priority.value,
+      data.inputValue.priority.viewValue
+    ]"
     cdkFocusInitial
     [disabled]="name.errors?.required"
   >

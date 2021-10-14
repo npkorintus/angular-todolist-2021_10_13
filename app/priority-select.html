@@ -1,0 +1,22 @@
+<!-- <mat-form-field>
+  <mat-select [(value)]="selected">
+    <mat-option>None</mat-option>
+    <mat-option value="0">High</mat-option>
+    <mat-option value="1"Medium">Medium</mat-option>
+    <mat-option value="2">Low</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<p>You selected: {{selected}}</p> -->
+
+<mat-form-field>
+  <mat-select
+    placeholder="Priority"
+    [(ngModel)]="selectedPriority"
+    name="priority"
+  >
+    <mat-option *ngFor="let priority of priorities" [value]="priority.value">
+      {{priority.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

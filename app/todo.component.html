@@ -12,7 +12,7 @@
           >{{ item.content }}</span
         >
         <span class="example-spacer"></span>
-        <span>{{ item.selectedPriority }}</span>
+        <span>{{ item.priority.value }}</span>
         <span class="example-spacer"></span>
         <mat-icon
           (click)="markItemAsDone(item)"
