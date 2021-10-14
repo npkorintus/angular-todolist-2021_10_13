@@ -76,17 +76,18 @@ export class TodoComponent implements OnInit {
   editItem(i) {
     this.openDialog();
     this.inputValue.content = i.content;
+    this.inputValue.priority = i.priority;
     this.editValue = true;
     this.inputId = i.id;
   }
   markItemAsDone(item) {
-    // this.inputValue.content = item.content;
-    // this.inputValue.isDone = true;
-    // this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
-    // this.todoDoc.update(this.inputValue);
-    // this.inputValue.content = '';
+    this.inputValue.content = item.content;
+    this.inputValue.isDone = true;
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
-    this.todoDoc.delete();
+    this.todoDoc.update(this.inputValue);
+    this.inputValue.content = '';
+    this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
+    // this.todoDoc.delete();
     this.openSnackBar('Item Done!', 'Dismiss');
   }
   markItemAsNotDone(item) {
@@ -130,18 +131,32 @@ export class TodoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('closed result: ', result);
-      console.log('The dialog was closed');
-      this.inputValue.content = result[0];
-      this.inputValue.priority.value = result[1];
-      this.inputValue.priority.viewValue = result[2];
-      if (this.editValue) {
-        console.log('inputValue: ', result);
-        this.saveNewItem();
-      } else {
-        console.log('inputValue: ', result);
-        this.addNewItem();
+      if (result) {
+        console.log('closed result: ', result);
+        console.log('The dialog was closed');
+        this.inputValue.content = result[0];
+        this.inputValue.priority.value = result[1];
+        this.inputValue.priority.viewValue = result[2];
+        if (this.editValue) {
+          console.log('inputValue: ', result);
+          this.saveNewItem();
+        } else {
+          console.log('inputValue: ', result);
+          this.addNewItem();
+        }
       }
+      // console.log('closed result: ', result);
+      // console.log('The dialog was closed');
+      // this.inputValue.content = result[0];
+      // this.inputValue.priority.value = result[1];
+      // this.inputValue.priority.viewValue = result[2];
+      // if (this.editValue) {
+      //   console.log('inputValue: ', result);
+      //   this.saveNewItem();
+      // } else {
+      //   console.log('inputValue: ', result);
+      //   this.addNewItem();
+      // }
     });
   }
 }
