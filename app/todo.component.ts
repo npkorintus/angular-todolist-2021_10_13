@@ -9,6 +9,11 @@ import 'rxjs/add/operator/map';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+export interface Priority {
+  value: string;
+  viewValue: string;
+}
+
 export interface Todo {
   content: string;
   id?: string;
@@ -16,6 +21,7 @@ export interface Todo {
   isDone?: boolean;
   priority: Priority;
 }
+
 @Component({
   selector: 'todo',
   templateUrl: './todo.component.html',
@@ -33,11 +39,6 @@ export class TodoComponent implements OnInit {
     },
   };
 
-  // priorities: Priority[] = [
-  //   { value: '0', viewValue: 'High' },
-  //   { value: '1', viewValue: 'Medium' },
-  //   { value: '2', viewValue: 'Low' },
-  // ];
   selected: string = 'content';
   editValue: boolean = false;
 
@@ -99,28 +100,11 @@ export class TodoComponent implements OnInit {
     this.inputId = i.id;
   }
   markItemAsDone(item) {
-    // this.inputValue.content = item.content;
-    // this.inputValue.priority.value = item.priority.value;
     this.inputValue.isDone = true;
-    // this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
-    // this.inputValue.priority.value = 'done';
-    // this.todoDoc.update(this.inputValue);
-    // this.inputValue.content = '';
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
     this.todoDoc.delete();
     this.openSnackBar('Item Done!', 'Dismiss');
   }
-  // markItemAsNotDone(item) {
-  //   this.inputValue.content = item.content;
-  //   this.inputValue.priority.value = item.priority.value;
-  //   this.inputValue.isDone = false;
-  //   this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
-  //   this.todoDoc.update(this.inputValue);
-  //   this.inputValue.content = '';
-  //   this.inputValue.priority.value = '';
-  //   this.inputValue.priority.viewValue = '';
-  //   this.openSnackBar('Item Not Done!', 'Dismiss');
-  // }
   saveNewItem() {
     if (this.inputValue.content != '') {
       this.inputValue.isDone = false;
@@ -177,7 +161,6 @@ export class TodoModal {
     { value: '1', viewValue: 'Medium' },
     { value: '2', viewValue: 'Low' },
   ];
-  //editValue: boolean = false;
   constructor(
     public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<TodoModal>,
@@ -187,26 +170,4 @@ export class TodoModal {
   onNoClick(): void {
     this.dialogRef.close();
   }
-}
-
-export interface Priority {
-  value: string;
-  viewValue: string;
-}
-
-/**
- * @title Basic select
- */
-@Component({
-  selector: 'priority-select',
-  templateUrl: 'priority-select.html',
-})
-export class PrioritySelect {
-  selectedPriority: string;
-
-  priorities: Priority[] = [
-    { value: '0', viewValue: 'High' },
-    { value: '1', viewValue: 'Medium' },
-    { value: '2', viewValue: 'Low' },
-  ];
 }

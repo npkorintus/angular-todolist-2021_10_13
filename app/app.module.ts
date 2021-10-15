@@ -20,7 +20,7 @@ import {
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppComponent } from './app.component';
-import { TodoComponent, TodoModal, PrioritySelect } from './todo.component';
+import { TodoComponent, TodoModal } from './todo.component';
 
 @NgModule({
   imports: [
@@ -49,8 +49,8 @@ import { TodoComponent, TodoModal, PrioritySelect } from './todo.component';
       messagingSenderId: '907624983083',
     }),
   ],
-  declarations: [AppComponent, TodoComponent, TodoModal, PrioritySelect],
+  declarations: [AppComponent, TodoComponent, TodoModal],
   bootstrap: [AppComponent],
-  entryComponents: [TodoComponent, TodoModal, PrioritySelect],
+  entryComponents: [TodoComponent, TodoModal],
 })
 export class AppModule {}
