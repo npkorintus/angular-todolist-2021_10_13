@@ -1,5 +1,5 @@
-<!-- <h1 mat-dialog-title *ngIf="!data.inputValue.content">Add a new item</h1>
-<h1 mat-dialog-title *ngIf="data.inputValue.content">Update item</h1> -->
+<!-- <h1 mat-dialog-title *ngIf="!data.editValue">Add a new item</h1>
+<h1 mat-dialog-title *ngIf="data.editValue">Update item</h1> -->
 <div mat-dialog-content>
   <form class="example-form">
     <mat-form-field>
@@ -13,13 +13,11 @@
         pattern="[A-Z][A-Za-z0-9 ]*"
         name="item"
       />
-
       <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
         <div *ngIf="name.errors?.required">field is required</div>
         <div *ngIf="name.errors?.pattern">Must start with capital letter</div>
       </div>
     </mat-form-field>
-    <!-- <priority-select></priority-select> -->
     <mat-form-field>
       <mat-select
         placeholder="Priority"
