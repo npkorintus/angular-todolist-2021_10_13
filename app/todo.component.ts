@@ -16,6 +16,8 @@ export interface Todo {
   datemodified?: Date;
   isDone?: boolean;
   priority: Priority;
+  // priority: number;
+  // priorityLabel: string;
 }
 @Component({
   selector: 'todo',
@@ -32,7 +34,15 @@ export class TodoComponent implements OnInit {
       value: '',
       viewValue: '',
     },
+    // priority: undefined,
+    // priorityLabel: '',
   };
+
+  priorities: Priority[] = [
+    { value: '0', viewValue: 'High' },
+    { value: '1', viewValue: 'Medium' },
+    { value: '2', viewValue: 'Low' },
+  ];
 
   editValue: boolean = false;
   constructor(
@@ -64,6 +74,8 @@ export class TodoComponent implements OnInit {
       this.inputValue.content = '';
       this.inputValue.priority.value = '';
       this.inputValue.priority.viewValue = '';
+      // this.inputValue.priority = undefined;
+      // this.inputValue.priorityLabel = '';
       this.openSnackBar('Added Successfuly!', 'Dismiss');
     }
   }
@@ -98,6 +110,8 @@ export class TodoComponent implements OnInit {
     this.inputValue.content = '';
     this.inputValue.priority.value = '';
     this.inputValue.priority.viewValue = '';
+    // this.inputValue.priority = undefined;
+    // this.inputValue.priorityLabel = '';
     this.openSnackBar('Item Not Done!', 'Dismiss');
   }
   saveNewItem() {
@@ -110,6 +124,8 @@ export class TodoComponent implements OnInit {
       this.inputValue.content = '';
       this.inputValue.priority.value = '';
       this.inputValue.priority.viewValue = '';
+      // this.inputValue.priority = undefined;
+      // this.inputValue.priorityLabel = '';
       this.openSnackBar('Updated Successfuly!', 'Dismiss');
     }
   }
@@ -137,6 +153,8 @@ export class TodoComponent implements OnInit {
         this.inputValue.content = result[0];
         this.inputValue.priority.value = result[1];
         this.inputValue.priority.viewValue = result[2];
+        // this.inputValue.priority = result[1];
+        // this.inputValue.priorityLabel = result[2];
         if (this.editValue) {
           console.log('inputValue: ', result);
           this.saveNewItem();
@@ -183,6 +201,9 @@ export class TodoModal {
 
   onNoClick(): void {
     this.dialogRef.close();
+    this.data.content = '';
+    // this.data.priority = undefined;
+    // this.data.priorityLabel = '';
   }
 }
 
@@ -222,12 +243,12 @@ export class PrioritySelect {
   ];
 }
 
-@Component({
-  selector: 'priority-radio-group',
-  // templateUrl: 'priority-radio-group.html',
-  // styleUrls: ['priority-radio-group.css'],
-})
-export class PriorityRadioGroup {
-  selectedPriority: string;
-  priorities: string[] = ['High', 'Medium', 'Low'];
-}
+// @Component({
+//   selector: 'priority-radio-group',
+//   // templateUrl: 'priority-radio-group.html',
+//   // styleUrls: ['priority-radio-group.css'],
+// })
+// export class PriorityRadioGroup {
+//   selectedPriority: string;
+//   priorities: string[] = ['High', 'Medium', 'Low'];
+// }

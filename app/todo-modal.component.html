@@ -22,7 +22,8 @@
   <mat-form-field>
     <mat-select
       placeholder="Priority"
-      [(ngModel)]="data.inputValue.priority"
+      [(ngModel)]="data.inputValue.priority.value"
+      [(value)]="data.inputValue.priority.value"
       name="priority"
       #priority="ngModel"
       required
