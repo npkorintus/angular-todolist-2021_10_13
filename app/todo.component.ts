@@ -150,8 +150,8 @@ export class TodoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('closed result: ', result);
         console.log('The dialog was closed');
+        console.log('closed result: ', result);
         this.inputValue.content = result[0];
         this.inputValue.priority.value = result[1];
         this.inputValue.priority.viewValue = result[2];
@@ -164,6 +164,9 @@ export class TodoComponent implements OnInit {
           console.log('inputValue: ', result);
           this.addNewItem();
         }
+      } else {
+        this.inputValue.content = '';
+        this.inputValue.priority.value = '';
       }
       // console.log('closed result: ', result);
       // console.log('The dialog was closed');
@@ -202,8 +205,10 @@ export class TodoModal {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    console.log('cancel clicked...');
+    console.log('onClose data: ', this.data);
     this.data.content = '';
+    this.dialogRef.close();
     // this.data.priority = undefined;
     // this.data.priorityLabel = '';
   }
