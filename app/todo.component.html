@@ -12,9 +12,9 @@
           >{{ item.content }}</span
         >
         <span class="example-spacer"></span>
-        <span *ngIf="item.priority.value == 0">High</span>
-        <span *ngIf="item.priority.value == 1">Medium</span>
-        <span *ngIf="item.priority.value == 2">Low</span>
+        <span *ngIf="item.priority.value === '0'">High</span>
+        <span *ngIf="item.priority.value === '1'">Medium</span>
+        <span *ngIf="item.priority.value === '2'">Low</span>
         <span class="example-spacer"></span>
         <mat-icon
           (click)="markItemAsDone(item)"

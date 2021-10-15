@@ -95,6 +95,8 @@ export class TodoComponent implements OnInit {
   markItemAsDone(item) {
     this.inputValue.content = item.content;
     this.inputValue.isDone = true;
+    this.inputValue.priority.value = item.priority.value;
+    this.inputValue.priority.value = 'done';
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
     this.todoDoc.update(this.inputValue);
     this.inputValue.content = '';
