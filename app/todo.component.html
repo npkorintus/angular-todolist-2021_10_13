@@ -1,5 +1,17 @@
 <mat-toolbar>To do list:</mat-toolbar>
 <mat-card class="todocard">
+  <span>Sort by:</span>
+  <mat-form-field>
+    <mat-select
+      [(ngModel)]="selected"
+      (value)="(selected)"
+      (selectionChange)="sort()"
+    >
+      <mat-option value="content">Name</mat-option>
+      <mat-option value="priority.value">Priority</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div>selected: {{ selected }}</div>
   <mat-list role="list">
     <mat-toolbar
       *ngFor="let item of todoList | async"
@@ -12,9 +24,9 @@
           >{{ item.content }}</span
         >
         <span class="example-spacer"></span>
-        <span *ngIf="item.priority.value === '0'">High</span>
-        <span *ngIf="item.priority.value === '1'">Medium</span>
-        <span *ngIf="item.priority.value === '2'">Low</span>
+        <span *ngIf="item.priority && item.priority.value === '0'">High</span>
+        <span *ngIf="item.priority && item.priority.value === '1'">Medium</span>
+        <span *ngIf="item.priority && item.priority.value === '2'">Low</span>
         <span class="example-spacer"></span>
         <mat-icon
           (click)="markItemAsDone(item)"

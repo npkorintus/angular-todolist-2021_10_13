@@ -33,36 +33,55 @@ export class TodoComponent implements OnInit {
     },
   };
 
-  priorities: Priority[] = [
-    { value: '0', viewValue: 'High' },
-    { value: '1', viewValue: 'Medium' },
-    { value: '2', viewValue: 'Low' },
-  ];
-
+  // priorities: Priority[] = [
+  //   { value: '0', viewValue: 'High' },
+  //   { value: '1', viewValue: 'Medium' },
+  //   { value: '2', viewValue: 'Low' },
+  // ];
+  selected: string = 'content';
   editValue: boolean = false;
+
   constructor(
     public afs: AngularFirestore,
     public snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog // public selected: string, // public selected: string
   ) {}
+
   ngOnInit() {
     this.todoCollection = this.afs.collection('Todolist');
     this.todoList = this.afs
-      .collection('Todolist', (ref) => ref.orderBy('priority.value'))
+      .collection('Todolist', (ref) => ref.orderBy(this.selected))
       .snapshotChanges()
       .map((changes) => {
         return changes.map((a) => {
           const data = a.payload.doc.data() as Todo;
           data.id = a.payload.doc.id;
           console.log('data: ', data);
+          console.log('selected: ', this.selected);
           return data;
         });
       });
   }
 
+  sort() {
+    this.todoList = this.afs
+      .collection('Todolist', (ref) => ref.orderBy(this.selected))
+      .snapshotChanges()
+      .map((changes) => {
+        return changes.map((a) => {
+          const data = a.payload.doc.data() as Todo;
+          data.id = a.payload.doc.id;
+          console.log('data: ', data);
+          console.log('selected: ', this.selected);
+          return data;
+        });
+      });
+    console.log('sort by: ', this.selected);
+  }
+
   addNewItem() {
     if (this.inputValue.content != '') {
-      console.log('added inputValue: ', this.inputValue);
+      // console.log('added inputValue: ', this.inputValue);
       this.inputValue.datemodified = new Date();
       this.inputValue.isDone = false;
       this.todoCollection.add(this.inputValue);
@@ -87,10 +106,10 @@ export class TodoComponent implements OnInit {
   }
   markItemAsDone(item) {
     this.inputValue.content = item.content;
-    this.inputValue.isDone = true;
     this.inputValue.priority.value = item.priority.value;
-    this.inputValue.priority.value = 'done';
+    this.inputValue.isDone = true;
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
+    this.inputValue.priority.value = 'done';
     this.todoDoc.update(this.inputValue);
     this.inputValue.content = '';
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
@@ -98,12 +117,13 @@ export class TodoComponent implements OnInit {
   }
   markItemAsNotDone(item) {
     this.inputValue.content = item.content;
+    this.inputValue.priority.value = item.priority.value;
     this.inputValue.isDone = false;
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
     this.todoDoc.update(this.inputValue);
     this.inputValue.content = '';
     this.inputValue.priority.value = '';
-    this.inputValue.priority.viewValue = '';
+    // this.inputValue.priority.viewValue = '';
     this.openSnackBar('Item Not Done!', 'Dismiss');
   }
   saveNewItem() {
@@ -140,16 +160,26 @@ export class TodoComponent implements OnInit {
         this.inputValue.priority.value = result[1];
         this.inputValue.priority.viewValue = result[2];
         if (this.editValue) {
-          console.log('inputValue: ', result);
+          // console.log('inputValue: ', result);
           this.saveNewItem();
         } else {
-          console.log('inputValue: ', result);
+          // console.log('inputValue: ', result);
           this.addNewItem();
         }
       } else {
         this.inputValue.content = '';
         this.inputValue.priority.value = '';
       }
+      // this.inputValue.content = result[0];
+      // this.inputValue.priority.value = result[1];
+      // this.inputValue.priority.viewValue = result[2];
+      // if (this.editValue) {
+      //   console.log('inputValue: ', result);
+      //   this.saveNewItem();
+      // } else {
+      //   console.log('inputValue: ', result);
+      //   this.addNewItem();
+      // }
     });
   }
 }
@@ -175,7 +205,7 @@ export class TodoModal {
 
   onNoClick(): void {
     console.log('cancel clicked...');
-    console.log('onClose data: ', this.data);
+    // console.log('onClose data: ', this.data);
     this.data.content = '';
     this.dialogRef.close();
   }
