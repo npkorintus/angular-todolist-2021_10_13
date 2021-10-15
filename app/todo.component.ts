@@ -105,24 +105,26 @@ export class TodoComponent implements OnInit {
     this.inputId = i.id;
   }
   markItemAsDone(item) {
-    this.inputValue.content = item.content;
-    this.inputValue.priority.value = item.priority.value;
-    this.inputValue.isDone = true;
+    // this.inputValue.content = item.content;
+    // this.inputValue.priority.value = item.priority.value;
+    // this.inputValue.isDone = true;
+    // this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
+    // this.inputValue.priority.value = 'done';
+    // this.todoDoc.update(this.inputValue);
+    // this.inputValue.content = '';
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
-    this.inputValue.priority.value = 'done';
-    this.todoDoc.update(this.inputValue);
-    this.inputValue.content = '';
-    this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
+    this.todoDoc.delete();
     this.openSnackBar('Item Done!', 'Dismiss');
   }
   markItemAsNotDone(item) {
+    this.openDialog();
     this.inputValue.content = item.content;
     this.inputValue.priority.value = item.priority.value;
     this.inputValue.isDone = false;
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
     this.todoDoc.update(this.inputValue);
-    this.inputValue.content = '';
-    this.inputValue.priority.value = '';
+    // this.inputValue.content = '';
+    // this.inputValue.priority.value = '';
     // this.inputValue.priority.viewValue = '';
     this.openSnackBar('Item Not Done!', 'Dismiss');
   }
