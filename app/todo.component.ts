@@ -69,8 +69,6 @@ export class TodoComponent implements OnInit {
         return changes.map((a) => {
           const data = a.payload.doc.data() as Todo;
           data.id = a.payload.doc.id;
-          console.log('data: ', data);
-          console.log('selected: ', this.selected);
           return data;
         });
       });
@@ -78,7 +76,6 @@ export class TodoComponent implements OnInit {
 
   addNewItem() {
     if (this.inputValue.content != '') {
-      // console.log('added inputValue: ', this.inputValue);
       this.inputValue.datemodified = new Date();
       this.inputValue.isDone = false;
       this.todoCollection.add(this.inputValue);
@@ -185,14 +182,9 @@ export class TodoModal {
     public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<TodoModal>,
     @Inject(MAT_DIALOG_DATA) public data: Todo
-  ) {
-    // console.log('data: ', data);
-  }
+  ) {}
 
   onNoClick(): void {
-    console.log('cancel clicked...');
-    // this.data.content = '';
-    // this.data.priority.value = '';
     this.dialogRef.close();
   }
 }
