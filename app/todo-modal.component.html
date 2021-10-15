@@ -1,58 +1,49 @@
-<!-- <h1 mat-dialog-title>Hi {{ data.name }}</h1> -->
 <!-- <h1 mat-dialog-title *ngIf="!editValue">Add a new item</h1>
 <h1 mat-dialog-title *ngIf="editValue">Update</h1> -->
 <div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input
-      matInput
-      id="item"
-      [(ngModel)]="data.inputValue.content"
-      #name="ngModel"
-      required
-      pattern="[A-Z][A-Za-z ]*"
-    />
+  <form class="example-form">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        id="item"
+        [(ngModel)]="data.inputValue.content"
+        #name="ngModel"
+        required
+        pattern="[A-Z][A-Za-z ]*"
+        name="item"
+      />
 
-    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
-      <div *ngIf="name.errors?.required">field is required</div>
-      <div *ngIf="name.errors?.pattern">Must start with capital letter</div>
-    </div>
-    <!-- <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
-      <div *ngIf="name.errors?.pattern">Must start with capital letter</div>
-    </div> -->
-  </mat-form-field>
-
-  <!-- custom select -->
-  <!-- <app-select></app-select> -->
-  <!-- <priority-select></priority-select> -->
-  <mat-form-field>
-    <mat-select
-      placeholder="Priority"
-      [(ngModel)]="data.inputValue.priority.value"
-      [(value)]="data.inputValue.priority.value"
-      name="priority"
-      #priority="ngModel"
-      required
-    >
-      <mat-option *ngFor="let priority of priorities" [value]="priority.value">
-        {{ priority.viewValue }}
-      </mat-option>
-    </mat-select>
-    <div
-      *ngIf="priority.invalid && (priority.dirty || priority.touched)"
-      class="alert"
-    >
-      <div *ngIf="priority.errors?.required">field is required</div>
-    </div>
-  </mat-form-field>
-  <!-- <mat-form-field>
-    <mat-select [(value)]="data.inputValue.priority.value">
-      <mat-option>None</mat-option>
-      <mat-option value="option1">Option 1</mat-option>
-      <mat-option value="option2">Option 2</mat-option>
-      <mat-option value="option3">Option 3</mat-option>
-    </mat-select>
-  </mat-form-field> -->
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
+        <div *ngIf="name.errors?.required">field is required</div>
+        <div *ngIf="name.errors?.pattern">Must start with capital letter</div>
+      </div>
+    </mat-form-field>
+    <!-- <priority-select></priority-select> -->
+    <mat-form-field>
+      <mat-select
+        placeholder="Priority"
+        [(ngModel)]="data.inputValue.priority.value"
+        [(value)]="data.inputValue.priority.value"
+        name="priority"
+        #priority="ngModel"
+        required
+      >
+        <mat-option
+          *ngFor="let priority of priorities"
+          [value]="priority.value"
+        >
+          {{ priority.viewValue }}
+        </mat-option>
+      </mat-select>
+      <div
+        *ngIf="priority.invalid && (priority.dirty || priority.touched)"
+        class="alert"
+      >
+        <div *ngIf="priority.errors?.required">field is required</div>
+      </div>
+    </mat-form-field>
+  </form>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>

@@ -21,7 +21,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AppComponent } from './app.component';
 import { TodoComponent, TodoModal, PrioritySelect } from './todo.component';
-// import { SelectComponent } from './select/select.component';
 
 @NgModule({
   imports: [

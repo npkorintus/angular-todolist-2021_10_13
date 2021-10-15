@@ -8,7 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { MatSnackBar } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-// import { Priority } from './select/select.component';
 
 export interface Todo {
   content: string;
@@ -16,8 +15,6 @@ export interface Todo {
   datemodified?: Date;
   isDone?: boolean;
   priority: Priority;
-  // priority: number;
-  // priorityLabel: string;
 }
 @Component({
   selector: 'todo',
@@ -34,8 +31,6 @@ export class TodoComponent implements OnInit {
       value: '',
       viewValue: '',
     },
-    // priority: undefined,
-    // priorityLabel: '',
   };
 
   priorities: Priority[] = [
@@ -74,8 +69,6 @@ export class TodoComponent implements OnInit {
       this.inputValue.content = '';
       this.inputValue.priority.value = '';
       this.inputValue.priority.viewValue = '';
-      // this.inputValue.priority = undefined;
-      // this.inputValue.priorityLabel = '';
       this.openSnackBar('Added Successfuly!', 'Dismiss');
     }
   }
@@ -101,7 +94,6 @@ export class TodoComponent implements OnInit {
     this.todoDoc.update(this.inputValue);
     this.inputValue.content = '';
     this.todoDoc = this.afs.doc(`Todolist/${item.id}`);
-    // this.todoDoc.delete();
     this.openSnackBar('Item Done!', 'Dismiss');
   }
   markItemAsNotDone(item) {
@@ -112,8 +104,6 @@ export class TodoComponent implements OnInit {
     this.inputValue.content = '';
     this.inputValue.priority.value = '';
     this.inputValue.priority.viewValue = '';
-    // this.inputValue.priority = undefined;
-    // this.inputValue.priorityLabel = '';
     this.openSnackBar('Item Not Done!', 'Dismiss');
   }
   saveNewItem() {
@@ -126,8 +116,6 @@ export class TodoComponent implements OnInit {
       this.inputValue.content = '';
       this.inputValue.priority.value = '';
       this.inputValue.priority.viewValue = '';
-      // this.inputValue.priority = undefined;
-      // this.inputValue.priorityLabel = '';
       this.openSnackBar('Updated Successfuly!', 'Dismiss');
     }
   }
@@ -143,20 +131,14 @@ export class TodoComponent implements OnInit {
       width: '250px',
       data: {
         inputValue: this.inputValue,
-        // content: this.inputValue.content,
-        // priority: this.inputValue.priority,
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('The dialog was closed');
-        console.log('closed result: ', result);
         this.inputValue.content = result[0];
         this.inputValue.priority.value = result[1];
         this.inputValue.priority.viewValue = result[2];
-        // this.inputValue.priority = result[1];
-        // this.inputValue.priorityLabel = result[2];
         if (this.editValue) {
           console.log('inputValue: ', result);
           this.saveNewItem();
@@ -168,18 +150,6 @@ export class TodoComponent implements OnInit {
         this.inputValue.content = '';
         this.inputValue.priority.value = '';
       }
-      // console.log('closed result: ', result);
-      // console.log('The dialog was closed');
-      // this.inputValue.content = result[0];
-      // this.inputValue.priority.value = result[1];
-      // this.inputValue.priority.viewValue = result[2];
-      // if (this.editValue) {
-      //   console.log('inputValue: ', result);
-      //   this.saveNewItem();
-      // } else {
-      //   console.log('inputValue: ', result);
-      //   this.addNewItem();
-      // }
     });
   }
 }
@@ -189,7 +159,6 @@ export class TodoComponent implements OnInit {
   templateUrl: './todo-modal.component.html',
 })
 export class TodoModal {
-  // todoCollection: AngularFirestoreCollection<Todo>;
   priorities: Priority[] = [
     { value: '0', viewValue: 'High' },
     { value: '1', viewValue: 'Medium' },
@@ -209,23 +178,8 @@ export class TodoModal {
     console.log('onClose data: ', this.data);
     this.data.content = '';
     this.dialogRef.close();
-    // this.data.priority = undefined;
-    // this.data.priorityLabel = '';
   }
 }
-
-// /** @title Select with 2-way value binding */
-// @Component({
-//   selector: 'priority-select',
-//   templateUrl: 'priority-select.html',
-//   // styleUrls: ['priority-select.css'],
-// })
-// export class PrioritySelect {
-//   selectedPriority: {
-//     value: string;
-//     viewValue: string;
-//   };
-// }
 
 export interface Priority {
   value: string;
@@ -238,7 +192,6 @@ export interface Priority {
 @Component({
   selector: 'priority-select',
   templateUrl: 'priority-select.html',
-  // styleUrls: ['select-overview-example.css'],
 })
 export class PrioritySelect {
   selectedPriority: string;
@@ -249,13 +202,3 @@ export class PrioritySelect {
     { value: '2', viewValue: 'Low' },
   ];
 }
-
-// @Component({
-//   selector: 'priority-radio-group',
-//   // templateUrl: 'priority-radio-group.html',
-//   // styleUrls: ['priority-radio-group.css'],
-// })
-// export class PriorityRadioGroup {
-//   selectedPriority: string;
-//   priorities: string[] = ['High', 'Medium', 'Low'];
-// }
